@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sun Bakes – Fresh From Our Oven</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sun: #F4A623;
+    --sun-deep: #E08C0A;
+    --cream: #FFF8EE;
+    --warm-brown: #4A2C0A;
+    --soft-brown: #8B5E3C;
+    --blush: #F9E4C8;
+    --white: #FFFFFF;
+    --text: #2C1A0E;
+    --muted: #9B7B60;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 6%; background: rgba(255,248,238,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(244,166,35,0.15); transition: box-shadow .3s; }
+  nav.scrolled { box-shadow: 0 4px 30px rgba(74,44,10,0.08); }
+  .logo { font-family: 'Playfair Display', serif; font-size: 1.65rem; font-weight: 900; color: var(--warm-brown); letter-spacing: -0.5px; }
+  .logo span { color: var(--sun); }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: .92rem; font-weight: 500; color: var(--soft-brown); letter-spacing: .3px; transition: color .2s; }
+  .nav-links a:hover { color: var(--sun-deep); }
+  .nav-cta { background: var(--sun); color: var(--warm-brown) !important; padding: .55rem 1.4rem; border-radius: 50px; font-weight: 600 !important; transition: background .2s, transform .15s !important; }
+  .nav-cta:hover { background: var(--sun-deep) !important; transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--warm-brown); border-radius: 2px; transition: .3s; }
+
+  #hero { min-height: 100vh; display: flex; align-items: center; padding: 8rem 6% 4rem; position: relative; overflow: hidden; }
+  .hero-blob { position: absolute; top: -10%; right: -5%; width: 55vw; height: 55vw; max-width: 700px; max-height: 700px; background: radial-gradient(circle at 40% 40%, #FDDEA0 0%, #F4A623 45%, #E08C0A 100%); border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; opacity: .18; animation: blobFloat 8s ease-in-out infinite; }
+  @keyframes blobFloat { 0%,100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; transform: translateY(0); } 50% { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; transform: translateY(-20px); } }
+  .hero-dots { position: absolute; top: 20%; left: 3%; width: 180px; height: 180px; background-image: radial-gradient(var(--sun) 1.5px, transparent 1.5px); background-size: 18px 18px; opacity: .18; }
+  .hero-content { position: relative; z-index: 2; max-width: 600px; }
+  .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: var(--blush); border: 1px solid rgba(244,166,35,.3); border-radius: 50px; padding: .4rem 1rem; font-size: .82rem; font-weight: 500; color: var(--soft-brown); margin-bottom: 1.8rem; animation: fadeUp .8s ease both; }
+  .hero-badge .dot { width: 7px; height: 7px; background: var(--sun); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.7} }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 900; line-height: 1.08; color: var(--warm-brown); margin-bottom: 1.4rem; animation: fadeUp .8s .15s ease both; }
+  .hero-title em { color: var(--sun); font-style: italic; }
+  .hero-desc { font-size: 1.08rem; line-height: 1.75; color: var(--muted); max-width: 480px; margin-bottom: 2.4rem; animation: fadeUp .8s .3s ease both; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp .8s .45s ease both; }
+  .btn-primary { background: var(--sun); color: var(--warm-brown); padding: .85rem 2rem; border-radius: 50px; font-weight: 600; font-size: .95rem; text-decoration: none; border: none; cursor: pointer; transition: background .2s, transform .15s, box-shadow .2s; box-shadow: 0 4px 20px rgba(244,166,35,.35); }
+  .btn-primary:hover { background: var(--sun-deep); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(244,166,35,.45); }
+  .btn-secondary { background: transparent; color: var(--warm-brown); padding: .85rem 2rem; border-radius: 50px; font-weight: 600; font-size: .95rem; text-decoration: none; border: 2px solid var(--warm-brown); cursor: pointer; transition: background .2s, color .2s, transform .15s; }
+  .btn-secondary:hover { background: var(--warm-brown); color: var(--white); transform: translateY(-2px); }
+  .hero-stats { display: flex; gap: 2.5rem; margin-top: 3.5rem; flex-wrap: wrap; animation: fadeUp .8s .6s ease both; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: var(--warm-brown); line-height: 1; }
+  .stat-num span { color: var(--sun); }
+  .stat-label { font-size: .8rem; color: var(--muted); margin-top: .2rem; letter-spacing: .5px; text-transform: uppercase; }
+  .hero-image { position: absolute; right: 6%; top: 50%; transform: translateY(-50%); width: 42%; max-width: 500px; display: flex; align-items: center; justify-content: center; animation: fadeUp .8s .3s ease both; }
+  .hero-image-box { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, #FDDEA0 0%, #F4A623 50%, #C97B1A 100%); border-radius: 40% 60% 55% 45% / 45% 50% 50% 55%; display: flex; align-items: center; justify-content: center; font-size: clamp(5rem, 12vw, 10rem); animation: blobFloat 8s ease-in-out infinite; box-shadow: 0 20px 60px rgba(244,166,35,.3); }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
+
+  section { padding: 6rem 6%; }
+  .section-label { font-size: .78rem; font-weight: 600; color: var(--sun-deep); letter-spacing: 2px; text-transform: uppercase; margin-bottom: .8rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--warm-brown); line-height: 1.15; margin-bottom: 1rem; }
+  .section-sub { font-size: 1rem; color: var(--muted); max-width: 520px; line-height: 1.7; }
+
+  #about { background: var(--warm-brown); color: var(--cream); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  #about .section-label { color: var(--sun); }
+  #about .section-title { color: var(--cream); }
+  #about .section-sub { color: rgba(255,248,238,.7); max-width: 100%; }
+  .about-features { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2rem; }
+  .about-feat { display: flex; gap: 1rem; align-items: flex-start; }
+  .feat-icon { width: 42px; height: 42px; flex-shrink: 0; background: rgba(244,166,35,.15); border: 1px solid rgba(244,166,35,.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+  .feat-text h4 { font-size: .95rem; font-weight: 600; color: var(--cream); margin-bottom: .2rem; }
+  .feat-text p { font-size: .85rem; color: rgba(255,248,238,.6); line-height: 1.6; }
+  .about-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .about-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 20px; padding: 1.5rem; text-align: center; transition: transform .2s, background .2s; }
+  .about-card:hover { transform: translateY(-4px); background: rgba(255,255,255,.1); }
+  .about-card.tall { grid-row: span 2; display: flex; flex-direction: column; justify-content: center; }
+  .about-card .emoji { font-size: 2.5rem; display: block; margin-bottom: .8rem; }
+  .about-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--cream); margin-bottom: .4rem; }
+  .about-card p { font-size: .8rem; color: rgba(255,248,238,.55); line-height: 1.6; }
+
+  #menu { background: var(--cream); }
+  .menu-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+  .menu-tabs { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .tab-btn { padding: .5rem 1.3rem; border-radius: 50px; border: 1.5px solid rgba(244,166,35,.3); background: transparent; color: var(--muted); font-size: .85rem; font-weight: 500; cursor: pointer; transition: all .2s; font-family: 'DM Sans', sans-serif; }
+  .tab-btn.active, .tab-btn:hover { background: var(--sun); border-color: var(--sun); color: var(--warm-brown); font-weight: 600; }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+  .menu-card { background: var(--white); border-radius: 24px; overflow: hidden; border: 1px solid rgba(244,166,35,.1); transition: transform .25s, box-shadow .25s; cursor: pointer; }
+  .menu-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(74,44,10,.1); }
+  .menu-card-img { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+  .menu-card-body { padding: 1.3rem; }
+  .menu-card-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--warm-brown); margin-bottom: .3rem; }
+  .menu-card-desc { font-size: .82rem; color: var(--muted); line-height: 1.55; margin-bottom: 1rem; }
+  .menu-card-footer { display: flex; justify-content: space-between; align-items: center; }
+  .menu-price { font-size: 1.1rem; font-weight: 700; color: var(--sun-deep); }
+  .add-btn { width: 34px; height: 34px; border-radius: 50%; background: var(--sun); border: none; cursor: pointer; font-size: 1.2rem; color: var(--warm-brown); font-weight: 700; transition: background .2s, transform .15s; display: flex; align-items: center; justify-content: center; }
+  .add-btn:hover { background: var(--sun-deep); transform: scale(1.1); }
+
+  #special { background: linear-gradient(135deg, var(--sun) 0%, #E08C0A 100%); padding: 4rem 6%; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  #special h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; color: var(--warm-brown); max-width: 480px; line-height: 1.2; }
+  #special p { color: rgba(74,44,10,.7); margin-top: .6rem; font-size: .95rem; }
+
+  #testimonials { background: var(--blush); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .testi-card { background: var(--white); border-radius: 20px; padding: 1.8rem; border: 1px solid rgba(244,166,35,.1); transition: transform .2s; }
+  .testi-card:hover { transform: translateY(-4px); }
+  .stars { color: var(--sun); font-size: 1rem; letter-spacing: 2px; margin-bottom: .8rem; }
+  .testi-text { font-size: .9rem; color: var(--text); line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: .8rem; }
+  .testi-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--sun), var(--sun-deep)); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .testi-name { font-weight: 600; font-size: .88rem; color: var(--warm-brown); }
+  .testi-role { font-size: .78rem; color: var(--muted); }
+
+  #contact { background: var(--cream); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .contact-item { display: flex; gap: 1rem; align-items: flex-start; margin-top: 1.8rem; }
+  .contact-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--blush); border: 1px solid rgba(244,166,35,.25); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .contact-text h4 { font-size: .95rem; font-weight: 600; color: var(--warm-brown); margin-bottom: .2rem; }
+  .contact-text p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+  .contact-form { background: var(--white); border-radius: 28px; padding: 2.5rem; border: 1px solid rgba(244,166,35,.15); box-shadow: 0 8px 40px rgba(74,44,10,.06); }
+  .form-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--warm-brown); margin-bottom: 1.8rem; }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label { display: block; font-size: .82rem; font-weight: 600; color: var(--soft-brown); margin-bottom: .4rem; letter-spacing: .3px; }
+  .form-group input, .form-group textarea, .form-group select { width: 100%; padding: .8rem 1rem; border: 1.5px solid rgba(244,166,35,.2); border-radius: 12px; background: var(--cream); font-family: 'DM Sans', sans-serif; font-size: .9rem; color: var(--text); outline: none; transition: border-color .2s, box-shadow .2s; appearance: none; }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--sun); box-shadow: 0 0 0 3px rgba(244,166,35,.12); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  footer { background: var(--warm-brown); color: var(--cream); padding: 4rem 6% 2rem; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand p { font-size: .88rem; color: rgba(255,248,238,.55); line-height: 1.7; margin-top: .8rem; max-width: 280px; }
+  .footer-col h4 { font-size: .85rem; font-weight: 600; color: var(--sun); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+  .footer-col ul li a { text-decoration: none; font-size: .85rem; color: rgba(255,248,238,.55); transition: color .2s; }
+  .footer-col ul li a:hover { color: var(--sun); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-bottom p { font-size: .8rem; color: rgba(255,248,238,.35); }
+  .social-links { display: flex; gap: .8rem; }
+  .social-link { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.07); display: flex; align-items: center; justify-content: center; font-size: 1rem; text-decoration: none; transition: background .2s, transform .15s; }
+  .social-link:hover { background: var(--sun); transform: translateY(-2px); }
+
+  .whatsapp-float { position: fixed; bottom: 2rem; left: 2rem; z-index: 999; display: flex; align-items: center; gap: .7rem; background: #25D366; color: #fff; padding: .75rem 1.3rem .75rem .9rem; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: .88rem; box-shadow: 0 6px 28px rgba(37,211,102,.45); transition: transform .2s, box-shadow .2s; animation: waBounce 2.5s ease-in-out infinite; }
+  .whatsapp-float:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 36px rgba(37,211,102,.55); animation: none; }
+  .whatsapp-float .wa-icon { width: 32px; height: 32px; background: rgba(255,255,255,.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .whatsapp-float .wa-texts { display: flex; flex-direction: column; line-height: 1.2; }
+  .whatsapp-float .wa-top { font-size: .7rem; opacity: .85; font-weight: 400; }
+  .whatsapp-float .wa-bottom { font-size: .9rem; font-weight: 700; }
+  @keyframes waBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .whatsapp-float::before { content: ''; position: absolute; inset: -4px; border-radius: 50px; border: 2.5px solid #25D366; opacity: 0; animation: waPulse 2.5s ease-in-out infinite; }
+  @keyframes waPulse { 0% { opacity:.6; transform: scale(1); } 100% { opacity:0; transform: scale(1.15); } }
+
+  .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--warm-brown); color: var(--cream); padding: 1rem 1.5rem; border-radius: 14px; font-size: .88rem; font-weight: 500; box-shadow: 0 8px 30px rgba(0,0,0,.2); transform: translateY(100px); opacity: 0; transition: all .35s ease; z-index: 200; }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  .mobile-nav { display: none; flex-direction: column; gap: 1.2rem; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--cream); z-index: 99; padding: 7rem 6% 3rem; align-items: flex-start; }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a { font-size: 1.5rem; font-weight: 600; color: var(--warm-brown); text-decoration: none; font-family: 'Playfair Display', serif; }
+
+  @media (max-width: 900px) { .hero-image { display: none; } #about, #contact { grid-template-columns: 1fr; gap: 3rem; } .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .nav-links { display: none; } .hamburger { display: flex; } #hero { padding-top: 6rem; } .hero-stats { gap: 1.5rem; } .footer-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } #special { text-align: center; justify-content: center; } }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="logo">Sun<span>Bakes</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Order Now</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" onclick="closeMobileNav()">About</a>
+  <a href="#menu" onclick="closeMobileNav()">Menu</a>
+  <a href="#testimonials" onclick="closeMobileNav()">Reviews</a>
+  <a href="#contact" onclick="closeMobileNav()">Order Now</a>
+</div>
+
+<section id="hero">
+  <div class="hero-blob"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span>Fresh baked daily — orders open!</div>
+    <h1 class="hero-title">Baked with <em>love</em>,<br>served with warmth.</h1>
+    <p class="hero-desc">Welcome to Sun Bakes — where every loaf, cake, and cookie is made from scratch with the finest ingredients and a whole lot of heart.</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">Explore Our Menu ☀️</a>
+      <a href="#contact" class="btn-secondary">Place an Order</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">500<span>+</span></div><div class="stat-label">Happy Customers</div></div>
+      <div class="stat-item"><div class="stat-num">50<span>+</span></div><div class="stat-label">Menu Items</div></div>
+      <div class="stat-item"><div class="stat-num">100<span>%</span></div><div class="stat-label">Homemade</div></div>
+    </div>
+  </div>
+  <div class="hero-image"><div class="hero-image-box">🎂</div></div>
+</section>
+
+<section id="about">
+  <div>
+    <div class="section-label">Our Story</div>
+    <h2 class="section-title">More than just a bakery — it's a feeling.</h2>
+    <p class="section-sub">Sun Bakes started from a home kitchen and a simple belief: that good food made with real ingredients can brighten anyone's day.</p>
+    <div class="about-features">
+      <div class="about-feat"><div class="feat-icon">🌾</div><div class="feat-text"><h4>Premium Ingredients</h4><p>We use only the freshest, locally sourced flour, dairy, and seasonal fruits.</p></div></div>
+      <div class="about-feat"><div class="feat-icon">👩‍🍳</div><div class="feat-text"><h4>Handcrafted Every Day</h4><p>No shortcuts. Every item is made fresh daily with traditional techniques.</p></div></div>
+      <div class="about-feat"><div class="feat-icon">📦</div><div class="feat-text"><h4>Custom Orders Welcome</h4><p>Birthdays, weddings, or just because — we craft bespoke treats for every occasion.</p></div></div>
+    </div>
+  </div>
+  <div class="about-visual">
+    <div class="about-card tall"><span class="emoji">☀️</span><h3>Rise & Shine</h3><p>Our oven fires up at 4 AM so you get the freshest bakes every single morning.</p></div>
+    <div class="about-card"><span class="emoji">🍰</span><h3>Celebration Cakes</h3><p>Made to order, made to impress.</p></div>
+    <div class="about-card"><span class="emoji">🍞</span><h3>Daily Breads</h3><p>Sourdough, multigrain, classic white — always fresh.</p></div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="menu-header">
+    <div><div class="section-label">What We Bake</div><h2 class="section-title">Our Menu</h2></div>
+    <a href="#contact" class="btn-primary">Order Custom 🎁</a>
+  </div>
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="filterMenu('all', this)">All Items</button>
+    <button class="tab-btn" onclick="filterMenu('cake', this)">Cakes 🎂</button>
+    <button class="tab-btn" onclick="filterMenu('bread', this)">Breads 🍞</button>
+    <button class="tab-btn" onclick="filterMenu('cookie', this)">Cookies 🍪</button>
+    <button class="tab-btn" onclick="filterMenu('pastry', this)">Pastries 🥐</button>
+  </div>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<section id="special">
+  <div>
+    <h2>🎉 Special Weekend Box — Only ₹599!</h2>
+    <p>6 cookies + 2 muffins + 1 signature bread loaf. Pre-order by Friday!</p>
+  </div>
+  <a href="#contact" class="btn-secondary" style="white-space:nowrap">Grab the Deal →</a>
+</section>
+
+<section id="testimonials">
+  <div class="section-label">Happy Customers</div>
+  <h2 class="section-title">What People Are Saying</h2>
+  <div class="testimonials-grid">
+    <div class="testi-card"><div class="stars">★★★★★</div><p class="testi-text">"The chocolate cake from Sun Bakes was the star of my daughter's birthday! Moist, rich, and beautifully decorated. Everyone was asking where it came from!"</p><div class="testi-author"><div class="testi-avatar">👩</div><div><div class="testi-name">Priya Ramesh</div><div class="testi-role">Regular Customer</div></div></div></div>
+    <div class="testi-card"><div class="stars">★★★★★</div><p class="testi-text">"I order their sourdough bread every week. It's the kind of bread that makes your whole home smell incredible. Absolutely love it!"</p><div class="testi-author"><div class="testi-avatar">👨</div><div><div class="testi-name">Arjun Suresh</div><div class="testi-role">Bread Lover</div></div></div></div>
+    <div class="testi-card"><div class="stars">★★★★★</div><p class="testi-text">"Ordered a custom wedding cake and they exceeded every expectation. Professional, warm, and delicious. Sun Bakes is truly special."</p><div class="testi-author"><div class="testi-avatar">👩</div><div><div class="testi-name">Meena & Karthik</div><div class="testi-role">Newlyweds</div></div></div></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-info">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Place an Order or Say Hello</h2>
+    <p class="section-sub">We'd love to bake something special for you. Fill in the form or reach us directly!</p>
+    <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-text"><h4>Find Us</h4><p>Sulur, Tamil Nadu, India<br>Open Mon–Sat: 7 AM – 8 PM</p></div></div>
+    <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-text"><h4>Call Us</h4><p>+91 8778455505<br>We're happy to take orders over the phone too!</p></div></div>
+    <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-text"><h4>Email Us</h4><p>hello@sunbakes.in<br>We reply within 24 hours.</p></div></div>
+    <div class="contact-item"><div class="contact-icon">📱</div><div class="contact-text"><h4>WhatsApp Orders</h4><p>+91 98765 43210 — Tap the green button or message us directly!</p></div></div>
+  </div>
+  <div class="contact-form">
+    <div class="form-title">Send Us a Message 🧁</div>
+    <div class="form-row">
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="e.g. Priya"></div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"></div>
+    </div>
+    <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@email.com"></div>
+    <div class="form-group"><label>What are you ordering?</label>
+      <select><option>Select an item…</option><option>Custom Cake</option><option>Bread Loaf</option><option>Cookies (Box)</option><option>Pastries / Croissants</option><option>Cupcakes</option><option>Weekend Special Box</option><option>Other / Custom</option></select>
+    </div>
+    <div class="form-group"><label>Message / Special Instructions</label><textarea placeholder="Tell us about flavors, dates, or any special requests…"></textarea></div>
+    <button class="btn-primary" style="width:100%;font-size:1rem;padding:1rem;" onclick="submitForm()">Send Order Request ☀️</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Sun<span>Bakes</span></div>
+      <p>Bringing warmth, sweetness, and sunshine to your table — one bake at a time. Proudly homemade in Tamil Nadu.</p>
+    </div>
+    <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#about">Our Story</a></li><li><a href="#menu">Menu</a></li><li><a href="#testimonials">Reviews</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>We Bake</h4><ul><li><a href="#">Celebration Cakes</a></li><li><a href="#">Artisan Breads</a></li><li><a href="#">Cookies & Bars</a></li><li><a href="#">Pastries & Muffins</a></li><li><a href="#">Custom Orders</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Sun Bakes. Made with ☀️ & 🧡 in Sulur, Tamil Nadu.</p>
+    <div class="social-links">
+      <a class="social-link" href="#" title="Instagram">📸</a>
+      <a class="social-link" href="#" title="Facebook">📘</a>
+      <a class="social-link" href="#" title="WhatsApp">💬</a>
+    </div>
+  </div>
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/8778455505?text=Hi%21%20I%27d%20like%20to%20place%20an%20order%20from%20Sun%20Bakes%20%F0%9F%8E%82" target="_blank" rel="noopener">
+  <div class="wa-icon">💬</div>
+  <div class="wa-texts"><span class="wa-top">Chat with us</span><span class="wa-bottom">Order on WhatsApp</span></div>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const items = [
+    { cat:'cake', name:'Classic Chocolate Cake', desc:'Rich, moist layers of cocoa sponge with silky chocolate ganache.', price:'₹450', bg:'linear-gradient(135deg,#3D1F00,#7B3F00)', emoji:'🎂' },
+    { cat:'cake', name:'Vanilla Dream Cake', desc:'Fluffy vanilla sponge with fresh cream and seasonal fruit.', price:'₹380', bg:'linear-gradient(135deg,#FFF3E0,#FFB74D)', emoji:'🍰' },
+    { cat:'cake', name:'Red Velvet Cake', desc:'Velvety red layers with cream cheese frosting.', price:'₹520', bg:'linear-gradient(135deg,#8B0000,#C62828)', emoji:'❤️' },
+    { cat:'bread', name:'Classic Sourdough', desc:'Tangy, crusty sourdough with an open crumb — baked at sunrise.', price:'₹120', bg:'linear-gradient(135deg,#8D6E63,#5D4037)', emoji:'🍞' },
+    { cat:'bread', name:'Multigrain Loaf', desc:'Seeds, grains, and whole wheat goodness in every slice.', price:'₹110', bg:'linear-gradient(135deg,#6D4C41,#4E342E)', emoji:'🌾' },
+    { cat:'bread', name:'Garlic Herb Focaccia', desc:'Italian flatbread with rosemary, garlic, and olive oil.', price:'₹150', bg:'linear-gradient(135deg,#33691E,#558B2F)', emoji:'🫓' },
+    { cat:'cookie', name:'Choco Chip Cookies', desc:'Buttery, crispy edges, gooey center. Classic perfection.', price:'₹80', bg:'linear-gradient(135deg,#5D4037,#8D6E63)', emoji:'🍪' },
+    { cat:'cookie', name:'Coconut Macaroons', desc:'Light, chewy coconut clusters with a hint of vanilla.', price:'₹70', bg:'linear-gradient(135deg,#F9A825,#F57F17)', emoji:'🥥' },
+    { cat:'pastry', name:'Butter Croissant', desc:'Flaky, golden, buttery — the way croissants should be.', price:'₹90', bg:'linear-gradient(135deg,#F9A825,#E65100)', emoji:'🥐' },
+    { cat:'pastry', name:'Blueberry Muffin', desc:'Bursting with fresh blueberries and topped with a golden crumble.', price:'₹75', bg:'linear-gradient(135deg,#4A148C,#7B1FA2)', emoji:'🫐' },
+    { cat:'pastry', name:'Cinnamon Roll', desc:'Soft, pillowy rolls drizzled with cream cheese glaze.', price:'₹85', bg:'linear-gradient(135deg,#BF360C,#E64A19)', emoji:'🌀' },
+    { cat:'cake', name:'Mango Mousse Cake', desc:'Light mousse cake bursting with fresh Alphonso mango.', price:'₹580', bg:'linear-gradient(135deg,#F57F17,#FFB300)', emoji:'🥭' },
+  ];
+
+  function renderMenu(filter) {
+    const grid = document.getElementById('menuGrid');
+    const filtered = filter === 'all' ? items : items.filter(i => i.cat === filter);
+    grid.innerHTML = filtered.map(item => `
+      <div class="menu-card">
+        <div class="menu-card-img" style="background:${item.bg}"><span style="filter:drop-shadow(0 4px 12px rgba(0,0,0,.25))">${item.emoji}</span></div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">${item.name}</div>
+          <div class="menu-card-desc">${item.desc}</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">${item.price}</span>
+            <button class="add-btn" onclick="addToCart('${item.name}')">+</button>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  function filterMenu(cat, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMenu(cat);
+  }
+
+  renderMenu('all');
+
+  function addToCart(name) { showToast(`🛒 "${name}" added to your order!`); }
+  function submitForm() { showToast("✅ Your order request has been sent! We'll contact you soon."); }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.toggle('open');
+  });
+
+  function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); }
+</script>
+</body>
+</html>
